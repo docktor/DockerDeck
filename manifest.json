@@ -1,0 +1,17 @@
+{
+  "name": "DockerDeck",
+  "description": "Inspect Docker Images and Containers",
+  "version": "1",
+  "manifest_version": 2,
+  "app": {
+    "launch": {
+      "local_path": "main.html"
+    },
+    "container":"tab"
+  },
+  "icons": {
+    "16": "icon_16.png",
+    "128": "icon_128.png"
+  },
+  "content_security_policy": "script-src 'self' http://127.0.0.1:4243; object-src 'self'"
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Docker Deck</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    
+	
+	
+	<div class="container">
+		<nav class="navbar navbar-default" role="navigation">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="#">
+				<img alt="Brand" src="icon_128.png" width="25px"/>
+			  </a>
+			  <a class="navbar-brand" href="#">
+				Docker Deck
+			  </a>
+			</div>
+		  </div>
+		</nav>
+	
+		<div class="panel panel-primary">
+		  <div class="panel-heading">Connect to a Docker daemon</div>
+			<div class="panel-body">
+				<form class="form-inline" role="form">
+					<div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">Host</div>
+						  <input class="form-control" type="text" placeholder="127.0.0.1" size="45" id="addDockerDeamonHost">
+						</div>
+						<div class="input-group">
+						  <div class="input-group-addon">Port</div>
+						  <input class="form-control" type="text" placeholder="4243" size="6" id="addDockerDeamonPost">
+						</div>
+						<button type="button" class="btn btn-primary" id="addDockerDeamonButton">OK</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<div class="panel panel-warning">
+		  <div class="panel-heading">Connected Docker Daemons</div>
+			<div class="panel-body">
+				<p><em>There is currently no connected Docker Daemon, common...</em></p>
+			</div>
+			<table class="table">
+				<thead>
+				  <tr>
+					<th>#</th>
+					<th>Host</th>
+					<th>Port</th>
+					<th>Containers</th>
+					<th>Images</th>
+					<th></th>
+				  </tr>
+				</thead>
+				<tbody>
+				  
+				</tbody>
+			  </table>
+		</div>
+		
+	</div>
+	
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="main.js"></script>
+  </body>
+</html>
