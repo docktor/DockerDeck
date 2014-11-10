@@ -28,41 +28,98 @@
 	  </div>
 	</nav>
 
-	<input type="hidden" id="addDockerDeamonHost" value="127.0.0.1"/>
+	<input type="hidden" id="addDockerDeamonHost" value="localhost"/>
 	<input type="hidden" id="addDockerDeamonPort" value="4243"/>
 		
 	<div class="container" id="container">	
 		<div class="row">
+			<div class="col-md-12" id="dockerDaemonViewErrorContainer">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12" id="dockerDaemonConnectForm">
+				<form class="form-inline" role="form" id="connectForm">
+					<div class="form-group">
+					    <div class="input-group">
+					      <div class="input-group-addon">Host</div>
+					      <input id="host" name="host" class="form-control" type="text" size="45" placeholder="127.0.0.1" required>
+					    </div>
+					</div>
+					<div class="form-group">
+					    <div class="input-group">
+					      <div class="input-group-addon">Port</div>
+					      <input id="port" name="port" class="form-control" type="number" size="6" placeholder="4243" min="1" max="65536" required>
+					    </div>
+					</div>
+					<button id="daemonConnectButton" type="submit" class="btn btn-primary">Connect</button>
+				</form>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-md-4" id="dockerDaemonViewContainer">
+			</div>
+			<div class="col-md-4" id="dockerDaemonVersionContainer">
 			</div>
 		</div>
 	</div>
 	
 	<script id="dockerDaemonView" type="text/template">
 		<div class="panel panel-default">
-		  <div class="panel-heading">Docker Daemon</div>
+		  <div class="panel-heading">
+		  	Docker Daemon {{host}}:{{port}}
+		  	 <button id="disconnectButton" type="button" class="btn btn-warning btn-xs pull-right"> <span class="glyphicon glyphicon-off"></span></button>
+		  </div>
 			<div class="panel-body">
 				<dl class="dl-horizontal">
-
 				  <dt>InitPath</dt>
-				  <dd>{{InitPath}}</dd>
+				  <dd>{{info.InitPath}}</dd>
 
 				  <dt>KernelVersion</dt>
-				  <dd>{{KernelVersion}}</dd>
+				  <dd>{{info.KernelVersion}}</dd>
 
 				  <dt>Driver</dt>
-				  <dd>{{Driver}}</dd>
+				  <dd>{{info.Driver}}</dd>
 
 				  <dt>Images</dt>
-				  <dd>{{Images}}</dd>
+				  <dd>{{info.Images}}</dd>
 
 				  <dt>Containers</dt>
-				  <dd>{{Containers}}</dd>
-
+				  <dd>{{info.Containers}}</dd>
 				</dl>
 			</div>
 		</div>
 	</script>
    
+	<script id="dockerDaemonVersion" type="text/template">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		  	Docker Version
+		  </div>
+			<div class="panel-body">
+				<dl class="dl-horizontal">
+				  <dt>ApiVersion</dt>
+				  <dd>{{version.ApiVersion}}</dd>
+
+				  <dt>Version</dt>
+				  <dd>{{version.Version}}</dd>
+
+				  <dt>GoVersion</dt>
+				  <dd>{{version.GoVersion}}</dd>
+				</dl>
+			</div>
+		</div>
+	</script>
+
+	<script id="dockerDaemonViewError" type="text/template">
+		<div class="panel panel-danger">
+		  <div class="panel-heading">
+		  	{{textStatus}}
+		  </div>
+			<div class="panel-body">
+				{{error}}
+			</div>
+		</div>
+	</script>
+
   </body>
 </html>

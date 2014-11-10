@@ -13,5 +13,8 @@
     "16": "icon_16.png",
     "128": "icon_128.png"
   },
+  "permissions": [
+    "http://*/"
+  ],
   "content_security_policy": "script-src 'self' http://127.0.0.1:4243; object-src 'self'"
 }

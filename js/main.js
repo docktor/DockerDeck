@@ -1,5 +1,3 @@
-
-
 /**
  * addDeamon
  * Host : host name or ip address, localhost by default
@@ -7,8 +5,18 @@
  * Callback : function (daemonInfo)
  **/
 function addDeamon( host,  port, callBackSuccess, callBackError) {
-	host = host || '127.0.0.1';
-	port = port || '4243';
+	console.log("Try to connect to " + host + ":" + port + "...");
+	var daemon = {
+			host : host, 
+			port : port, 
+			info : null,
+			textStatus : null,
+			error : null,
+			version : null
+		};
+
+	daemon.host = host || '127.0.0.1';
+	daemon.port = port || '4243';
 	
 	$.ajax({
 		crossDomain: true,
@@ -16,22 +24,68 @@ function addDeamon( host,  port, callBackSuccess, callBackError) {
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		url: 'http://' + host + ':' + port + '/info'
-	}).done(function(data) {
-		console.log( "success" );
-		callBackSuccess(data);
-	}).fail(function(data) {
-		console.log( "error" );
-		callBackError(data);
+	}).done(function(data,  textStatus, jqXHR) {
+		daemon.info = data;
+		daemon.textStatus = textStatus;
+		callBackSuccess(daemon);
+	}).fail(function( jqXHR, textStatus, errorThrown) {
+		daemon.info = null;
+		daemon.textStatus = "Connection to Docker Daemon failed";
+		daemon.error = "Error : unable to connect to " + daemon.host + ":"+ daemon.port;
+		callBackError(daemon);
 	});
 	
 }
 
-function renderDockerDaemonView(info) {
-	console.log("MUSTACHE");
+function renderDockerDaemonView(daemon) {
+	console.log("Connection OK");
+	emptyDockerDaemonView(daemon.error);
 	var template = $("#dockerDaemonView").html();
-	console.log(template);
-	var html = Mustache.to_html(template, info);
+	var html = Mustache.to_html(template, daemon);
 	$('#dockerDaemonViewContainer').html(html);
+	initControllers();
+}
+
+function renderDockerDaemonVersion(daemon) {
+	console.log("Connection OK");
+	emptyDockerDaemonView(daemon.error);
+	var template = $("#dockerDaemonView").html();
+	var html = Mustache.to_html(template, daemon);
+	$('#dockerDaemonViewContainer').html(html);
+	initControllers();
+}
+
+function renderDockerDaemonViewError(daemon) {
+	console.log("Connection Failed");
+	emptyDockerDaemonView(daemon.error);
+	var template = $("#dockerDaemonViewError").html();
+	var html = Mustache.to_html(template, daemon);
+	$('#dockerDaemonViewErrorContainer').html(html);
+}
+
+function emptyDockerDaemonView(error) {
+	if (error) {
+		$('#dockerDaemonViewContainer').html('');
+		$('#dockerDaemonConnectForm').fadeIn();
+	} else {
+		$('#dockerDaemonViewContainer').html('');
+		$('#dockerDaemonViewErrorContainer').html('');
+		$('#dockerDaemonConnectForm').fadeOut();
+	}	
+
+}
+
+function connectToDaemon() {
+	addDeamon(
+		$('#addDockerDeamonHost').val(), 
+		$('#addDockerDeamonPort').val(), 
+		renderDockerDaemonView,
+		renderDockerDaemonViewError
+	);
+}
+
+function validateConnectForm() {
+	return document.getElementById('connectForm').checkValidity();
 }
 
 
@@ -39,17 +93,30 @@ function renderDockerDaemonView(info) {
  * Shorthand for $( document ).ready()
  **/
 $(function() {
-	var daemons = [];
+	$('#dockerDaemonConnectForm').hide();
 	
-	
+	connectToDaemon();
 
-	addDeamon(
-		$('#addDockerDeamonHost').val(), 
-		$('#addDockerDeamonPort').val(), 
-		renderDockerDaemonView,
-		function(info) {
-			console.log("ERROR");
+	$('#daemonConnectButton').click(
+		function(event) {
+			event.preventDefault();
+			if (validateConnectForm()) {
+				addDeamon(
+					$('#host').val(), 
+					$('#port').val(), 
+					renderDockerDaemonView,
+					renderDockerDaemonViewError
+				);
+			}
 		}
 	);
 });
 
+function initControllers() {
+	$('#disconnectButton').click(
+		function() {
+			emptyDockerDaemonView(true);
+		}
+	);
+	
+}

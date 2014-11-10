@@ -16,3 +16,11 @@ dl {
 .dl-horizontal dd {
 	margin-left: 140px;
 }
+
+:not(button):valid {
+   box-shadow: 0 0 2px 1px #3c763d;
+}
+
+:not(button):invalid {
+   box-shadow: 0 0 2px 1px #a94442;
+}
