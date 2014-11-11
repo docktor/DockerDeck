@@ -60,6 +60,8 @@
 			</div>
 			<div class="col-md-4" id="dockerDaemonVersionContainer">
 			</div>
+			<div class="col-md-4" id="dockerDaemonEventsContainer">
+			</div>
 		</div>
 	</div>
 	
@@ -71,11 +73,8 @@
 		  </div>
 			<div class="panel-body">
 				<dl class="dl-horizontal">
-				  <dt>InitPath</dt>
+				  <dt>Init Path</dt>
 				  <dd>{{info.InitPath}}</dd>
-
-				  <dt>KernelVersion</dt>
-				  <dd>{{info.KernelVersion}}</dd>
 
 				  <dt>Driver</dt>
 				  <dd>{{info.Driver}}</dd>
@@ -85,6 +84,9 @@
 
 				  <dt>Containers</dt>
 				  <dd>{{info.Containers}}</dd>
+
+				  <dt>Index Server</dt>
+				  <dd>{{info.IndexServerAddress}}</dd>
 				</dl>
 			</div>
 		</div>
@@ -93,19 +95,38 @@
 	<script id="dockerDaemonVersion" type="text/template">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
-		  	Docker Version
+		  	Version
 		  </div>
 			<div class="panel-body">
 				<dl class="dl-horizontal">
-				  <dt>ApiVersion</dt>
-				  <dd>{{version.ApiVersion}}</dd>
-
 				  <dt>Version</dt>
 				  <dd>{{version.Version}}</dd>
 
-				  <dt>GoVersion</dt>
+				  <dt>Api Version</dt>
+				  <dd>{{version.ApiVersion}}</dd>
+
+				  <dt>Go Version</dt>
 				  <dd>{{version.GoVersion}}</dd>
+
+				  <dt>Kernel Version</dt>
+				  <dd>{{info.KernelVersion}}</dd>
+
+				  <dt>Arch</dt>
+				  <dd>{{version.Arch}}</dd>
 				</dl>
+			</div>
+		</div>
+	</script>
+
+	<script id="dockerDaemonEventsView" type="text/template">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		  	Events
+		  </div>
+			<div class="panel-body">
+				{{#events}}
+					<b>{{name}}</b>
+				{{/events}}
 			</div>
 		</div>
 	</script>

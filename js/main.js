@@ -12,7 +12,8 @@ function addDeamon( host,  port, callBackSuccess, callBackError) {
 			info : null,
 			textStatus : null,
 			error : null,
-			version : null
+			version : null,
+			since : new Date().getTime()
 		};
 
 	daemon.host = host || '127.0.0.1';
@@ -35,23 +36,38 @@ function addDeamon( host,  port, callBackSuccess, callBackError) {
 		callBackError(daemon);
 	});
 	
+$.ajax({
+		crossDomain: true,
+        type:"GET",
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		url: 'http://' + host + ':' + port + '/version'
+	}).done(function(data,  textStatus, jqXHR) {
+		daemon.version = data;
+		daemon.textStatus = textStatus;
+		callBackSuccess(daemon);
+	}).fail(function( jqXHR, textStatus, errorThrown) {
+		daemon.version = null;
+		daemon.textStatus = "Connection to Docker Daemon failed";
+		daemon.error = "Error : unable to connect to " + daemon.host + ":"+ daemon.port;
+		callBackError(daemon);
+	});
+
 }
 
 function renderDockerDaemonView(daemon) {
-	console.log("Connection OK");
 	emptyDockerDaemonView(daemon.error);
-	var template = $("#dockerDaemonView").html();
-	var html = Mustache.to_html(template, daemon);
-	$('#dockerDaemonViewContainer').html(html);
-	initControllers();
-}
+	if (daemon.info) {
+		var template = $("#dockerDaemonView").html();
+		var html = Mustache.to_html(template, daemon);
+		$('#dockerDaemonViewContainer').html(html);
+	}
+	if (daemon.version) {
+		var template = $("#dockerDaemonVersion").html();
+		var html = Mustache.to_html(template, daemon);
+		$('#dockerDaemonVersionContainer').html(html);
+	}
 
-function renderDockerDaemonVersion(daemon) {
-	console.log("Connection OK");
-	emptyDockerDaemonView(daemon.error);
-	var template = $("#dockerDaemonView").html();
-	var html = Mustache.to_html(template, daemon);
-	$('#dockerDaemonViewContainer').html(html);
 	initControllers();
 }
 
@@ -63,12 +79,18 @@ function renderDockerDaemonViewError(daemon) {
 	$('#dockerDaemonViewErrorContainer').html(html);
 }
 
+function loadDockerDaemonEvents() {
+	//http://localhost:4243/events?since=1415727850&until=1415729025
+}
+
 function emptyDockerDaemonView(error) {
 	if (error) {
 		$('#dockerDaemonViewContainer').html('');
+		$('#dockerDaemonVersionContainer').html('');
 		$('#dockerDaemonConnectForm').fadeIn();
 	} else {
 		$('#dockerDaemonViewContainer').html('');
+		$('#dockerDaemonVersionContainer').html('');
 		$('#dockerDaemonViewErrorContainer').html('');
 		$('#dockerDaemonConnectForm').fadeOut();
 	}	
