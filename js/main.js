@@ -1,5 +1,5 @@
 /**
- * addDeamon
+ * connectDaemon
  * Host : host name or ip address, localhost by default
  * Port : tcp docker port, 4243 by default
  * Callback : function (daemonInfo)
