@@ -167,7 +167,7 @@ function loadDockerDaemonEvents() {
 function loadDockerDaemonLive() {
 	var host = $('#dockerDaemonHost').val();
 	var port = $('#dockerDaemonPort').val();
-	getRunningContainers(host, port, renderDockerDaemonView, renderDockerDaemonViewError);
+	getRunningContainers(host, port, renderLive, renderDockerDaemonViewError);
 	
 }
 
