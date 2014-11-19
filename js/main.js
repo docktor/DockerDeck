@@ -208,9 +208,7 @@ function validateConnectForm() {
  **/
 $(function() {
 	$('#dockerDaemonConnectForm').hide();
-	
 	connectToDaemon();
-
 	$('#daemonConnectButton').click(
 		function(event) {
 			event.preventDefault();
@@ -232,5 +230,4 @@ function initControllers() {
 			emptyDockerDaemonView(true);
 		}
 	);
-	
 }
