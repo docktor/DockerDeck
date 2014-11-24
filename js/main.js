@@ -13,7 +13,7 @@ function connectDaemon( host,  port, callBackSuccess, callBackError) {
 			textStatus : null,
 			error : null,
 			version : null,
-			since : Math.floor(new Date().getTime() / 1000),
+			since : Math.floor(new Date().getTime() / 1000 - 1000),
 			runningContainers : []
 		};
 
@@ -104,8 +104,11 @@ function getEvents(host,  port, since, until, callBackSuccess, callBackError) {
 		.fail(function( jqXHR, textStatus, errorThrown) {
 			try {
 				var data = JSON.parse('[' + jqXHR.responseText.replace(/}{/g, '},{') + ']');
-				listEvents.events =  data;
-				console.log(listEvents);
+				listEvents.events = data;
+				listEvents.events.forEach(function(event) {
+					time = moment.unix(event.time).fromNow();
+					event.time = time;
+				});
 				callBackSuccess(listEvents);
 			} catch (err) {
 				console.error(err);
@@ -131,7 +134,7 @@ function renderDockerDaemonView(daemon) {
 		renderMustache('dockerDaemonVersion', 'dockerDaemonVersionContainer', daemon);
 	}
 	renderLive(daemon);
-	renderMustache('dockerDaemonEventsView', 'dockerDaemonEventsContainer', {});
+	renderMustache('dockerDaemonEventsView', 'mainContainer', {});
 
 	initControllers();
 }
@@ -175,13 +178,13 @@ function emptyDockerDaemonView(error) {
 	if (error) {
 		$('#dockerDaemonViewContainer').html('');
 		$('#dockerDaemonVersionContainer').html('');
-		$('#dockerDaemonEventsContainer').html('');
+		$('#mainContainer').html('');
 		$('#dockerDaemonLiveContainer').html('');
 		$('#dockerDaemonConnectForm').fadeIn();
 	} else {
 		$('#dockerDaemonViewContainer').html('');
 		$('#dockerDaemonVersionContainer').html('');
-		$('#dockerDaemonEventsContainer').html('');
+		$('#mainContainer').html('');
 		$('#dockerDaemonLiveContainer').html('');
 		$('#dockerDaemonViewErrorContainer').html('');
 		$('#dockerDaemonConnectForm').fadeOut();
@@ -207,21 +210,24 @@ function validateConnectForm() {
  * Shorthand for $( document ).ready()
  **/
 $(function() {
-	$('#dockerDaemonConnectForm').hide();
-	connectToDaemon();
-	$('#daemonConnectButton').click(
-		function(event) {
-			event.preventDefault();
-			if (validateConnectForm()) {
-				addDeamon(
-					$('#host').val(), 
-					$('#port').val(), 
-					renderDockerDaemonView,
-					renderDockerDaemonViewError
-				);
+	$('#templatesEvents').load( "html/event-list.html");
+	$('#templatesDaemon').load( "html/daemon.html", function() {
+  		$('#dockerDaemonConnectForm').hide();
+		connectToDaemon();
+		$('#daemonConnectButton').click(
+			function(event) {
+				event.preventDefault();
+				if (validateConnectForm()) {
+					addDeamon(
+						$('#host').val(), 
+						$('#port').val(), 
+						renderDockerDaemonView,
+						renderDockerDaemonViewError
+					);
+				}
 			}
-		}
-	);
+		);
+	});
 });
 
 function initControllers() {

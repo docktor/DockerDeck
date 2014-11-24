@@ -1,0 +1,33 @@
+<script id="dockerDaemonEventsView" type="text/template">
+	<div class="panel panel-default">
+	  <div class="panel-leftheading">
+	  	<h3 class="panel-lefttitle">
+	  	<span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Events
+	  	</h3>
+	  </div>
+	  <span id="dockerDaemonEventsListContainer" class="panel-rightbody">
+		<div>
+			<em>No events...</em>
+		</div>
+		</span>
+		<div class="clearfix">
+		</div>
+	</div>
+</script>
+
+<script id="dockerDaemonEventsList" type="text/template">
+	
+	 	{{#events}}
+	 	 <ul class="list-inline list-unstyled">
+	 		<li><div class="eventTime"><i class="glyphicon glyphicon-time"></i> {{time}} </div></li> 
+	 		<li> | </li>
+	 		<li><div class="eventId">{{id}}</div></li>
+	 		<li> | </li>
+	 		<li><div class="badge eventStatus">{{status}}</div></li>
+	 		<li> | </li>
+	 		<li><a>{{from}}</a></li>
+	 	</ul>
+		{{/events}}	 	
+	 
+
+</script>
