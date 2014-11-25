@@ -125,7 +125,7 @@ h1, .h1 {
 
 .eventTime
 {
-    width: 100px;
+    width: 120px;
     color: #CCCCCC;
     font-size: 12px
 }
@@ -139,4 +139,25 @@ h1, .h1 {
 {
 	width: 100px;
 	text-align: center;
+}
+
+.badge-success
+{
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.badge-danger
+{
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+.badge-warning 
+{
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
 }

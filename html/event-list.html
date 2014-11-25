@@ -21,13 +21,16 @@
 	 	 <ul class="list-inline list-unstyled">
 	 		<li><div class="eventTime"><i class="glyphicon glyphicon-time"></i> {{time}} </div></li> 
 	 		<li> | </li>
-	 		<li><div class="eventId">{{id}}</div></li>
+	 		<li><div class="eventId"><a href="#" data-containerId="{{id}}" data-type="container">{{id}}</a></div></li>
 	 		<li> | </li>
-	 		<li><div class="badge eventStatus">{{status}}</div></li>
+	 		<li>
+	 			<div class="badge eventStatus badge-{{state}}">
+	 				{{status}}
+	 			</div>
+	 		</li>
 	 		<li> | </li>
-	 		<li><a>{{from}}</a></li>
+	 		<li><a href="#" data-image="{{from}}" data-type="image">{{from}}</a></li>
 	 	</ul>
 		{{/events}}	 	
 	 
-
 </script>

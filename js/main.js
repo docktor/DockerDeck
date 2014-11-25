@@ -108,7 +108,37 @@ function getEvents(host,  port, since, until, callBackSuccess, callBackError) {
 				listEvents.events.forEach(function(event) {
 					time = moment.unix(event.time).fromNow();
 					event.time = time;
+					switch (event.status) {
+						case 'create':
+							event.state = 'success';
+							break;
+						case 'start':
+							event.state = 'success';
+							break;
+						case 'restart':
+							event.state = 'success';
+							break;
+						case 'unpause':
+							event.state = 'success';
+							break;
+						case 'destroy':
+							event.state = 'danger';
+							break;
+						case 'stop':
+							event.state = 'danger';
+							break;
+						case 'kill':
+							event.state = 'danger';
+							break;
+						case 'die':
+							event.state = 'danger';
+							break;
+						case 'pause':
+							event.state = 'warning';
+							break;
+					}
 				});
+				console.log(listEvents);
 				callBackSuccess(listEvents);
 			} catch (err) {
 				console.error(err);
