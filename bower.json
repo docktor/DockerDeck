@@ -1,0 +1,7 @@
+{
+  "name": "DockerDeck",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular-material" : "0.6.1"
+  }
+}
