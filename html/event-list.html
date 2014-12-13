@@ -1,11 +1,14 @@
 <script id="dockerDaemonEventsView" type="text/template">
 	<div class="panel panel-default" style="min-height: 100px;">
-	  <div class="panel-leftheading">
+	  <div class="panel-leftheading clickable" id="listEventsMenu">
 	  	<h3 class="panel-lefttitle">
 	  	<span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Events
 	  	</h3>
+
 	  </div>
+	  
 	  <span id="dockerDaemonEventsListContainer" class="panel-rightbody">
+
 		<div>
 			<em>No events...</em>
 		</div>
@@ -34,3 +37,4 @@
 		{{/events}}	 	
 	 
 </script>
+

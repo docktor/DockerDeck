@@ -87,7 +87,7 @@ function getRunningContainers(host,  port, callBackSuccess, callBackError) {
 
 function getEvents(host,  port, since, until, callBackSuccess, callBackError) {
 	var url = 'http://' + host + ':' + port + '/events?since=' + since + '&until=' + until;
-	console.log(url);
+	//console.log(url);
 
 	if (host !== null && port !== null && since !== null && !until !== null ) {	
 		listEvents = {
@@ -98,7 +98,7 @@ function getEvents(host,  port, since, until, callBackSuccess, callBackError) {
 			function(data,  textStatus, jqXHR) {
 				console.log(data);
 				listEvents.events =  data;
-				console.log(listEvents);
+				//console.log(listEvents);
 				callBackSuccess(listEvents);
 			})
 		.fail(function( jqXHR, textStatus, errorThrown) {
@@ -110,7 +110,7 @@ function getEvents(host,  port, since, until, callBackSuccess, callBackError) {
 					event.time = time;
 					switch (event.status) {
 						case 'create':
-							event.state = 'success';
+							event.state = 'info';
 							break;
 						case 'start':
 							event.state = 'success';
@@ -131,14 +131,14 @@ function getEvents(host,  port, since, until, callBackSuccess, callBackError) {
 							event.state = 'danger';
 							break;
 						case 'die':
-							event.state = 'danger';
+							event.state = 'none';
 							break;
 						case 'pause':
 							event.state = 'warning';
 							break;
 					}
 				});
-				console.log(listEvents);
+				//console.log(listEvents);
 				callBackSuccess(listEvents);
 			} catch (err) {
 				console.error(err);
@@ -171,11 +171,12 @@ function renderDockerDaemonView(daemon) {
 
 function renderEvents(listEvents) {
 	renderMustache('dockerDaemonEventsList', 'dockerDaemonEventsListContainer', listEvents);
+	loadEventsListContoler();
 }
 
 function renderLive(daemon) {
 	if (daemon.runningContainers) {
-		console.log(daemon.runningContainers);
+		//console.log(daemon.runningContainers);
 		renderMustache('dockerDaemonLive', 'dockerDaemonLiveContainer', daemon);
 	}
 }
@@ -258,6 +259,7 @@ $(function() {
 			}
 		);
 	});
+
 });
 
 function initControllers() {
@@ -266,4 +268,34 @@ function initControllers() {
 			emptyDockerDaemonView(true);
 		}
 	);
+}
+
+function loadEventsListContoler() {
+	$('#listEventsMenu').off('click');
+	$('#listEventsMenu').click(function(event) {
+		console.log("click");
+		if ($(this).hasClass('panel-collapsed')) {
+            // expand the panel
+            $(this).parents('.panel').find('.panel-body').slideRight();
+            $(this).removeClass('panel-collapsed');
+        }
+        else {
+            // collapse the panel
+            //console.dir(this);
+            //console.log($(this).parents('.panel').find('.panel-body'));
+            console.dir($(this).parents('.panel'));
+            $(this).parents('.panel').animate({
+				opacity: 0.4
+			}, {
+				step: function (now, fx) {
+					if (fx.elem.if === "listEventsMenu") {
+						console.dir($(fx.elem).find('.panel-body'));
+						$(fx.elem).find('.panel-body').hide();
+					}
+				}
+			});
+
+            //$(this).addClass('panel-collapsed');
+        }
+	});
 }

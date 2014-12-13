@@ -148,6 +148,13 @@ h1, .h1 {
     border-color: #4cae4c;
 }
 
+.badge-info
+{
+    color: #fff;
+    background-color: #428bca;
+    border-color: #428bca;
+}
+
 .badge-danger
 {
     color: #fff;
