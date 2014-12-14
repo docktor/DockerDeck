@@ -1,112 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DockerDeck</title>
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="bower_components/angular-material/themes/indigo-theme.css">
+	<link rel="stylesheet" href="bower_components/angular-material/themes/green-theme.css">
+	<link rel="stylesheet" href="bower_components/angular-material/themes/light-blue-dark-theme.css">
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/moment.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/mustache.js"></script>
-	<script src="js/main.js"></script>
-  </head>
-  <body>
-    
-	<nav class="navbar navbar-default" role="navigation">
-	  <div class="container-fluid">
-		<div class="navbar-header">
-		  <a class="navbar-brand" href="#">
-			<img alt="Brand" src="icon_128.png" width="25px"/>
-		  </a>
-		  <a class="navbar-brand" href="#">
-			DockerDeck
-		  </a>
-		</div>
-	  </div>
-	</nav>
+    <script src="./bower_components/angular/angular.js"></script>
+    <script src="./bower_components/angular-aria/angular-aria.js"></script>
+    <script src="./bower_components/angular-animate/angular-animate.js"></script>
+    <script src="./bower_components/hammerjs/hammer.js"></script>
+    <script src="./bower_components/angular-material/angular-material.js"></script>
+    <script src="./js/main.js"></script>
+</head>
+   <div ng-app="test" ng-controller="DemoController" layout="column">
 
-	<input type="hidden" id="addDockerDeamonHost" value="localhost"/>
-	<input type="hidden" id="addDockerDeamonPort" value="4243"/>
-		
-	<div class="container" id="container">	
-		<div class="row">
-			<div class="col-md-12" id="dockerDaemonViewErrorContainer">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12" id="dockerDaemonConnectForm">
-				<form class="form-inline" role="form" id="connectForm">
-					<div class="form-group">
-					    <div class="input-group">
-					      <div class="input-group-addon">Host</div>
-					      <input id="host" name="host" class="form-control" type="text" size="45" placeholder="127.0.0.1" required>
-					    </div>
-					</div>
-					<div class="form-group">
-					    <div class="input-group">
-					      <div class="input-group-addon">Port</div>
-					      <input id="port" name="port" class="form-control" type="number" size="6" placeholder="4243" min="1" max="65536" required>
-					    </div>
-					</div>
-					<button id="daemonConnectButton" type="submit" class="btn btn-primary">Connect</button>
-				</form>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4" id="dockerDaemonViewContainer">
-			</div>
-			<div class="col-md-4" id="dockerDaemonVersionContainer">
-			</div>
-			<div class="col-md-4" id="dockerDaemonLiveContainer">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12" id="mainContainer">
-				<div class="panel panel-default">
-					  <div class="panel-leftheading">
-					  	<h3 class="panel-lefttitle">
-					  		<span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Containers
-					  	</h3>
-					  	<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-					  </div>
-					  <span id="listContainersContainer" class="panel-rightbody">
-						<div  >
-							<em>No events...</em>
-						</div>
-					</span>
-					<div class="clearfix">
-			    	</div>
-				</div>
-			</div>
-		</div>
+	  <md-content md-theme="light-blue-dark">
+	    <md-card>
+	    <form style="padding: 20px;">
+	      <div class="row">
+	        <md-text-float label="Title" ng-model="user.title"></md-text-float>
+	        <md-text-float label="eMail" ng-model="user.email" type="email"></md-text-float>
+	      </div>
+	    </form>
+	    </md-card>
+	  </md-content>
+	  <md-content>
+	  	<md-card>
+	    <form style="padding: 20px;">
+	      <md-text-float label="Company" ng-model="user.company" disabled> </md-text-float>
+	      <div class="row">
+	          <md-text-float label="FirstName" ng-model="user.firstName"> </md-text-float>
+	          <md-text-float label="LastName" ng-model="user.lastName" class="long"> </md-text-float>
+	      </div>
+	      <md-text-float label="Address" ng-model="user.address"> </md-text-float>
+	      <div class="row">
+	        <md-text-float label="City" ng-model="user.city"> </md-text-float>
+	        <md-text-float label="State" ng-model="user.state"> </md-text-float>
+	        <md-text-float label="Postal Code" ng-model="user.postalCode"> </md-text-float>
+	      </div>
+	      <md-text-float label="Country" ng-model="user.country" disabled> </md-text-float>
+	    </form>
+	    </md-card>
+	  </md-content>
 	</div>
-   
-	 <div id="templatesDaemon" style="display: none;"></div>
-	 <div id="templatesEvents" style="display: none;"></div>
-
-
-	<script id="listContainers" type="text/template">
-		 <table class="table table-condensed">
-    		<tr>
-    			<th>Time</th>
-    			<th>Id</th>
-    			<th>Status</th>
-    			<th>From</th>
-    		</tr>
-    		{{#events}}
-    			<tr>
-	    			<td>{{time}}</td>
-	       			<td><a>{{id}}</a></td>
-		   			<td>{{status}}</td>
-					<td><a>{{from}}</a></td>
-				</tr>
-    		{{/events}}
-  		</table>	
-	</script>
-
-  </body>
 </html>

@@ -2,6 +2,12 @@
   "name": "DockerDeck",
   "version": "0.0.1",
   "dependencies": {
-    "angular-material" : "0.6.1"
+    "angular-material" : "0.6.1",
+    "angular-resource" : "1.3.*"
+  },
+  "devDependencies": {
+    "jasmine": "2.1.*",
+    "karma-jasmine": "*",
+	 "angular-mocks": "1.3.*"
   }
 }
