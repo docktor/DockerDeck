@@ -39,7 +39,7 @@ describe('Controller : DockerController', function () {
     });
 });
 
-describe("Controller: DockerController function ", function() {
+describe("Controller: DockerController function ", function () {
     var $scope;
 
     beforeEach(function () {
@@ -54,14 +54,18 @@ describe("Controller: DockerController function ", function() {
     }));
 
     var callRefreshInfo = function (callback) {
+        console.log("$scope.refreshInfo(...)");
         $scope.refreshInfo(callback);
     };
 
     beforeEach(function (done) {
+        console.log("callRefresh info");
+        console.log(done);
         callRefreshInfo(done);
     });
 
     it('should set daemon.info when calling refreshInfo async function', function () {
+        console.log("will expect something...");
         expect($scope.daemon.info).toBeDefined();
     });
 });

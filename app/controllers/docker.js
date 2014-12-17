@@ -10,11 +10,21 @@ controllers.controller('DockerController', ['$scope', 'DockerService', function 
         $scope.daemon.port = port;
     }
 
-    $scope.refreshInfo = function (callback) {
-        DockerService.callGithub().success(function(data, status, headers, config) {
-            $scope.daemon.info = data;
-            callback();
-        });
+    $scope.refreshInfo = function (successCallback, errorCallback) {
+        console.log("controller.DockerController.refreshInfo()");
+        DockerService.callGithub(
+            function(data) {
+                console.log("controller.DockerController.refreshInfo().callGitHub.successCallback");
+                $scope.daemon.info = data;
+                if (successCallback)
+                    successCallback();
+            }, function() {
+                console.log("ERROR");
+                if (errorCallback)
+                    errorCallback();
+            }
+        );
+
     };
 
 }]);

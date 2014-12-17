@@ -28,8 +28,20 @@ services.service('DockerService', function ($http) {
                 "GoVersion": "go1.0.3"
             }
         },
-        callGithub: function() {
-            return $http.get('https://api.github.com/users/fsamin');
+        callGithub: function (successCallback, errorCallback) {
+            console.log("services.DockerService.callGitHub()");
+            console.log($http);
+            $http.get('https://api.github.com/users/fsamin')
+                .success(function (data, status, headers, config) {
+                    console.log("services.DockerService.callGithub().$http.success");
+                    if (successCallback)
+                        successCallback(data, status, headers, config);
+                })
+                .error(function (data, status, headers, config) {
+                    console.log("services.DockerService.callGithub().$http.error");
+                    if (errorCallback)
+                        errorCallback(data, status, headers, config);
+                });
         }
     };
 });
