@@ -25,7 +25,7 @@ describe('DockerService tests', function () {
         // Set up the mock http service responses
         $httpBackend = $injector.get('$httpBackend');
         // backend definition common for all tests
-        httpRequestHandler = $httpBackend.when('GET', 'https://api.github.com/users/fsamin')
+        httpRequestHandler = $httpBackend.when('GET', 'http://jsonplaceholder.typicode.com/users')
             .respond({userId: 'userX'}, {'A-Token': 'xxx'});
     }));
 
@@ -39,17 +39,11 @@ describe('DockerService tests', function () {
         expect(angular.isFunction(dockerService.callGithub)).toBe(true);
     });
 
-    it('should fetch authentication token', function () {
-        $httpBackend.expectGET('https://api.github.com/users/fsamin');
-        dockerService.callGithub();
-        $httpBackend.flush();
-    });
-
     it('should call error callback on http.GET error', function () {
 
         // Notice how you can change the response even after it was set
         httpRequestHandler.respond(401, '');
-        $httpBackend.expectGET('https://api.github.com/users/fsamin');
+        $httpBackend.expectGET('http://jsonplaceholder.typicode.com/users');
 
         scope.callbackError = function () {
         };
@@ -72,7 +66,7 @@ describe('DockerService tests', function () {
 
         // Notice how you can change the response even after it was set
         httpRequestHandler.respond(200, '');
-        $httpBackend.expectGET('https://api.github.com/users/fsamin');
+        $httpBackend.expectGET('http://jsonplaceholder.typicode.com/users');
 
         scope.callbackError = function () {
         };

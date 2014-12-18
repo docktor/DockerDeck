@@ -1,4 +1,4 @@
-describe('Controller : DockerController', function () {
+describe('Controller : DockerController definition', function () {
     var $scope;
 
     // excuted before each "it" is run.
@@ -12,7 +12,6 @@ describe('Controller : DockerController', function () {
             $scope: $scope
         });
     }));
-
 
     it('should have a daemon host and port', function () {
         expect($scope.daemon.host).toBe("127.0.0.1");
@@ -39,7 +38,7 @@ describe('Controller : DockerController', function () {
     });
 });
 
-describe("Controller: DockerController function ", function () {
+describe("Controller: DockerController async function ", function () {
     var $scope;
 
     beforeEach(function () {
@@ -53,19 +52,48 @@ describe("Controller: DockerController function ", function () {
         });
     }));
 
-    var callRefreshInfo = function (callback) {
-        console.log("$scope.refreshInfo(...)");
-        $scope.refreshInfo(callback);
-    };
+    function callAsyncRefreshInfoCtrlFunction(done) {
+        $scope.refreshInfo(function() {
+            console.log("SUCCESS");
+            done();
+        }, function(){
+            console.log("ERROR");
+        });
+    }
 
     beforeEach(function (done) {
-        console.log("callRefresh info");
-        console.log(done);
-        callRefreshInfo(done);
+        console.log("before each async testcase call");
+        callAsyncRefreshInfoCtrlFunction(done);
     });
 
-    it('should set daemon.info when calling refreshInfo async function', function () {
-        console.log("will expect something...");
-        expect($scope.daemon.info).toBeDefined();
+    it('refreshInfo should set daemon.info', function () {
+    });
+});
+
+describe("Asynchronous specs", function() {
+
+    var value = 0;
+    jasmine.getEnv().defaultTimeoutInterval = 5000;
+
+        function funcRunInBackground() {
+        value = 1;
+    }
+
+    function wrapFuncRunInBackground(done) {
+        // setup for simmulating the async operation, a function run in the background
+        setTimeout(function() {
+            funcRunInBackground();
+            done();
+        }, 3000);
+    }
+
+    beforeEach(function(done) {
+        wrapFuncRunInBackground(done);
+        console.log("wrap function returns immediately but value = 1 is set 3 seconds later. value is still " + value);
+    });
+
+
+    it("should support async execution of test preparation", function() {
+        expect(value).toBeGreaterThan(0);
     });
 });

@@ -18,7 +18,7 @@ services.service('DockerService', function ($http) {
                 "MemoryLimit": true,
                 "SwapLimit": false,
                 "IPv4Forwarding": true
-            }
+            };
         },
         getVersion: function () {
             return {
@@ -26,21 +26,22 @@ services.service('DockerService', function ($http) {
                 "Version": "0.2.2",
                 "GitCommit": "5a2a5cc+CHANGES",
                 "GoVersion": "go1.0.3"
-            }
+            };
         },
         callGithub: function (successCallback, errorCallback) {
-            console.log("services.DockerService.callGitHub()");
-            console.log($http);
-            $http.get('https://api.github.com/users/fsamin')
+            console.log("-- services.DockerService.callGitHub()");
+            $http.get('http://jsonplaceholder.typicode.com/users')
                 .success(function (data, status, headers, config) {
-                    console.log("services.DockerService.callGithub().$http.success");
-                    if (successCallback)
-                        successCallback(data, status, headers, config);
+                    console.log("--- services.DockerService.callGithub().$http.success");
+                    if (successCallback) {
+                        successCallback(data);
+                    }
                 })
                 .error(function (data, status, headers, config) {
-                    console.log("services.DockerService.callGithub().$http.error");
-                    if (errorCallback)
-                        errorCallback(data, status, headers, config);
+                    console.log("--- services.DockerService.callGithub().$http.error");
+                    if (errorCallback) {
+                        errorCallback(data);
+                    }
                 });
         }
     };
