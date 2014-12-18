@@ -1,49 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css">
-    <link rel="stylesheet" href="./css/main.css">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="bower_components/angular-material/themes/indigo-theme.css">
-	<link rel="stylesheet" href="bower_components/angular-material/themes/green-theme.css">
-	<link rel="stylesheet" href="bower_components/angular-material/themes/light-blue-dark-theme.css">
+    <link rel="stylesheet" href="bower_components/angular-material/themes/green-theme.css">
+    <link rel="stylesheet" href="bower_components/angular-material/themes/light-blue-dark-theme.css">
 
-    <script src="./bower_components/angular/angular.js"></script>
-    <script src="./bower_components/angular-aria/angular-aria.js"></script>
-    <script src="./bower_components/angular-animate/angular-animate.js"></script>
-    <script src="./bower_components/hammerjs/hammer.js"></script>
-    <script src="./bower_components/angular-material/angular-material.js"></script>
-    <script src="./js/main.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/hammerjs/hammer.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/controllers/docker.js"></script>
+    <script src="app/services/docker.js"></script>
 </head>
-   <div ng-app="test" ng-controller="DemoController" layout="column">
+<div ng-app="DockerDeck" ng-controller="DockerController" layout="column">
 
-	  <md-content md-theme="light-blue-dark">
-	    <md-card>
-	    <form style="padding: 20px;">
-	      <div class="row">
-	        <md-text-float label="Title" ng-model="user.title"></md-text-float>
-	        <md-text-float label="eMail" ng-model="user.email" type="email"></md-text-float>
-	      </div>
-	    </form>
-	    </md-card>
-	  </md-content>
-	  <md-content>
-	  	<md-card>
-	    <form style="padding: 20px;">
-	      <md-text-float label="Company" ng-model="user.company" disabled> </md-text-float>
-	      <div class="row">
-	          <md-text-float label="FirstName" ng-model="user.firstName"> </md-text-float>
-	          <md-text-float label="LastName" ng-model="user.lastName" class="long"> </md-text-float>
-	      </div>
-	      <md-text-float label="Address" ng-model="user.address"> </md-text-float>
-	      <div class="row">
-	        <md-text-float label="City" ng-model="user.city"> </md-text-float>
-	        <md-text-float label="State" ng-model="user.state"> </md-text-float>
-	        <md-text-float label="Postal Code" ng-model="user.postalCode"> </md-text-float>
-	      </div>
-	      <md-text-float label="Country" ng-model="user.country" disabled> </md-text-float>
-	    </form>
-	    </md-card>
-	  </md-content>
-	</div>
+
+    <md-content md-theme="light-blue-dark">
+        <md-card>
+            <form style="padding: 20px;">
+                <div class="row">
+                    <md-text-float label="Title" ng-model="user.title"></md-text-float>
+                    <md-text-float label="eMail" ng-model="user.email" type="email"></md-text-float>
+                </div>
+            </form>
+        </md-card>
+    </md-content>
+    <md-content>
+        <md-card>
+            <md-button class="md-button-colored" ng-click="refreshInfo()">
+                I'm a link
+            </md-button>
+        </md-card>
+    </md-content>
+</div>
 </html>

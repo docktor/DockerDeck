@@ -33,6 +33,7 @@ services.service('DockerService', function ($http) {
             $http.get('http://jsonplaceholder.typicode.com/users')
                 .success(function (data, status, headers, config) {
                     console.log("--- services.DockerService.callGithub().$http.success");
+                    console.log(data);
                     if (successCallback) {
                         successCallback(data);
                     }
